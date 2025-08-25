@@ -1,0 +1,74 @@
+[user]
+	name = Umut Sirin
+	email = umut.sirin@discordapp.com
+
+[alias]
+  st = status --untracked-files
+  ci = commit
+  cian = commit --amend --no-edit
+  co = checkout
+  cp = cherry-pick
+  cpc = cherry-pick --continue
+  cpa = cherry-pick --abort
+  di = diff
+  aa = add --all
+  b  = branch -vv
+  bd = branch -D
+  logo = log --decorate --oneline -n 100
+  logf = log --graph --oneline
+  rc = rebase --continue
+  ra = rebase --abort
+  ri = rebase --interactive
+  p = pull --rebase
+  g = grep --break --heading --line-number
+  url =! bash -c 'git config --get remote.origin.url | sed -E "s/git@\\(.+\\)\\:\\(.+\\)\\.git$/https:\\\\/\\\\/\\\\1\\\\/\\\\2/g"'
+  open =! bash -c 'git url | xargs open'
+  ignore = update-index --assume-unchanged
+  unignore = update-index --no-assume-unchanged
+  ignored =! git ls-files -v | grep ^[a-z]
+  prom = pull --rebase origin main
+  pom = pull origin main
+  undo = reset HEAD~1
+  wip =! bash -c 'git add --all && git commit -m wip --no-verify'
+	change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
+
+[core]
+  editor = nvim
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  side-by-side = true
+  ; plus-color = "#012800"
+  ; minus-color = "#340001"
+  syntax-theme = OneHalfDark
+
+[github]
+  user = usirin
+[push]
+	default = simple
+[gpg]
+	program = /opt/homebrew/bin/gpg
+[rebase]
+	autostash = true
+[credential]
+  helper = store
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[commit]
+	gpgsign = false
+[init]
+	defaultBranch = main
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[checkout]
+	defaultRemote = origin
+[includeIf "gitdir:~/code/github.com/usirin/"]
+	path = ~/code/github.com/usirin/.gitconfig
+[pull]
+	rebase = false
